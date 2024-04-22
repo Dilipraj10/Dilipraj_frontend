@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Task1.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Task-1</title>
+</head>
+<body>
+    
+    <div class="continer">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <i class="nav-link disabled" style="margin-top: 1px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12.97 2.59a1.5 1.5 0 0 0-1.94 0l-7.5 6.363A1.5 1.5 0 0 0 3 10.097V19.5A1.5 1.5 0 0 0 4.5 21h4.75a.75.75 0 0 0 .75-.75V14h4v6.25c0 .414.336.75.75.75h4.75a1.5 1.5 0 0 0 1.5-1.5v-9.403a1.5 1.5 0 0 0-.53-1.144l-7.5-6.363Z"></path></svg></i>
+                  <a class="nav-link disabled" aria-disabled="true"> > coupon > <span style="color: orangered;">Supplier store coupones</span></a>
+                </div>
+              </div>
+            </div>
+          </nav>
+    </div>
+    <div class="container text-center">
+        <div class="row">
+          <div class="col-4" style="border-right: 1px solid lightgray;">
+            <br>
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Store Coupon Code <span style="color: red; font-size: 13px;">*</span></label>
+                    <input class="form-control" type="text" placeholder=" eg: SAVEBIG SAVEMAX ">
+                </div>
+            </div>
+            <br>
+
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Description <span style="color: red;">*</span></label>
+                    <div class="mb-3">
+                        
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder=" eg: Simple product"></textarea>
+                      </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Discount Type <span style="color: red;">*</span></label>
+                    <!-- <input class="form-control" type="text"> -->
+                    <select class="form-select fw-bold" aria-label="Default select example">
+                        <label><option selected>Percentage / cash</option></label>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                </div>
+            </div>
+            
+            <br>
+
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Coupon Amount <span style="color: red;">*</span></label>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <br>
+
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Coupon Expery date <span style="color: red; ">*</span></label>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <br>
+
+            <div class="check" style="font-size: 20px; position: relative; left: 20px; margin-right: 110px;">
+                <input type="checkbox"> Minimum purchase value
+            </div>
+            <br>
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Minimum purchase value <span style="color: red;">*</span></label>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <br>
+
+            <div class="col mt-6">
+                <div class="textOnInput">
+                    <label for="inputText">Minimum Discount Amount <span style="color: red;">*</span></label>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+
+           
+
+            
+          </div>
+          <div class="col-8">
+            <br>
+            <table>
+                <tr >
+                    <td >
+                        <button type="button" class="btn btn-primary"
+                        style="background-color: #e77b0f; width: 200px;  border-color:#e77b0f">
+                        <h6 style="margin-left: -100px;">Limit</h6>
+                        </button>
+                    </td>
+                    <td style="padding-left: 40px;">
+                        <!-- <legend>Usage Limit Per Coupon</legend> -->
+                        <div class="col mt-1">
+                            <div class="textOnInput">
+                                <label for="inputText" style="font-size: 15px;">Usage limit Per Coupon<span style="color: red; width: 40px;">*</span></label>
+                                <input class="form-control" type="text" style="width: 250px;" placeholder="eg: Zero"> <br>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <br> <br>
+                <tr>
+                    <td></td>
+                    <td style="padding-left: 40px;">
+                        <div class="col mt-1">
+                            <div class="textOnInput">
+                                <label for="inputText" style="font-size: 15px;">Usage limit Per User<span style="color: red; width: 40px;">*</span></label>
+                                <input class="form-control" type="text" style="width: 250px;" placeholder="eg: Unlimited Usage">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" style="margin-left: 10px;"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg></i>
+                    </td>
+                </tr>
+            </table>
+            <div class="btn" style="margin-left: 250px;">
+            <button type="button" class="btn btn-primary btn-sm" style="background-color: #e77b0f; border-color: #e77b0f; margin-top: 500px; width: 180px; font-size: 20px;">Draft</button>
+            <button type="button" class="btn btn-primary btn-sm"  style="background-color: #e77b0f; border-color: #e77b0f; margin-top: 500px;  width: 180px; margin-left: 20px; font-size: 20px;">Submit</button>
+            </div>
+            
+          </div>
+        </div>
+    </div>
+</body>
+</html>

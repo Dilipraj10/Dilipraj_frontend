@@ -1,0 +1,33 @@
+#date, #time,#id,#fi,#ph,#ad{
+    margin-left: 100px ;
+}
+
+
+#male{
+    margin-left: 90px;
+}
+
+
+#text{
+    margin-left: 70px;
+    margin-bottom: -25px;
+}
+
+#app{
+    margin-top: 50px;
+}
+
+.main{
+    display: flex;
+}
+
+.opt{
+    margin-left: 60px;
+}
+
+
+.btn{
+    margin-left: 150px;
+    margin-top: 20px;
+}
+
