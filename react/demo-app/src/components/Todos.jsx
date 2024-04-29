@@ -1,52 +1,164 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
-const reducer = (state, action) => {
-    switch(action.type){
-        case "ADD":
-            // Check if the id already exists in the state
-            if (state.some(item => item.id === action.data.id)) {
-                return state; // Ignore adding item with same ID
-            } else {
-                // If id doesn't exist, add the new item
-                return [...state, {...action.data, complete: false}];
-            }
-        case "DEL":
-            return state.filter(item => item.id !== action.id);
-        case "EDIT":
-            return state.map(item => {
-                if(item.id === action.id) {
-                    return {...item, ...action.data};
-                }
-                return item;
-            });
-        default:
-            return state;
-    }
-}
+const Appi = () => {
+    const [products, setProducts] = useState([]);
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editProductId, setEditProductId] = useState(null);
+    const [productName, setProductName] = useState('');
+    const [productPrice, setProductPrice] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-const Todos = () => {
-    const [input, setInput] = useState({ id: '', title: '' });
-    const [state, dispatch] = useReducer(reducer, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-    const handleEdit = (id, title) => {
-        dispatch({ type: "EDIT", id: id, data: { title: title } });
+    const fetchData = async () => {
+        try {
+            const response = await axios.get("https://p-9x7e.onrender.com/products/products");
+            setProducts(response.data.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
     };
 
+    const handleDelete = async (deleteId) => {
+        try {
+            const res = await axios.delete(`https://p-9x7e.onrender.com/products/delete-product/${deleteId}`);
+            alert(res.data.message);
+            fetchData();
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+    };
+
+    const handleAdd = async () => {
+        try {
+            const res = await axios.post("https://p-9x7e.onrender.com/products/add-product", {
+                pName: productName,
+                pPrice: productPrice
+            });
+            alert(res.data.message);
+            setShowAddModal(false);
+            setProductName('');
+            setProductPrice('');
+            fetchData();
+        } catch (error) {
+            console.error("Error adding product:", error);
+        }
+    };
+
+    const handleEdit = async () => {
+        try {
+            const res = await axios.put(`https://p-9x7e.onrender.com/products/edit-product/${editProductId}`, {
+                pName: productName,
+                pPrice: productPrice
+            });
+            alert(res.data.message);
+            setShowEditModal(false);
+            setProductName('');
+            setProductPrice('');
+            setEditProductId(null);
+            fetchData();
+        } catch (error) {
+            console.error("Error editing product:", error);
+        }
+    };
+
+    const handleEditClick = (productId, productName, productPrice) => {
+        setShowEditModal(true);
+        setEditProductId(productId);
+        setProductName(productName);
+        setProductPrice(productPrice);
+    };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
     return (
-        <div>
-            <h1>{JSON.stringify(state)}</h1>
-            <input type="text" onChange={(e)=> {setInput({...input, id: e.target.value})}} placeholder="Enter ID" />
-            <input type="text" onChange={(e)=> {setInput({...input, title: e.target.value})}} placeholder="Enter Title" />
-            <button onClick={()=> dispatch({type: "ADD", data: input})}>ADD</button>
-            {state.map((item) => (
-                <div key={item.id}>
-                    <input type="text" value={item.title} onChange={(e) => handleEdit(item.id, e.target.value)} />
-                    <button onClick={()=> dispatch({type: "DEL", id: item.id})}>Delete</button>
-                    <button onClick={()=> handleEdit(item.id, input.title)}>Edit</button>
-                </div>
-            ))}
+        <div className="container mt-5">
+            <h1>Product List</h1>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>P Id</th>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map(product => (
+                        <tr key={product._id}>
+                            <td>{product._id}</td>
+                            <td>{product.pName}</td>
+                            <td>{product.pPrice}</td>
+                            <td>{product.date}</td>
+                            <td>
+                                <Button variant="info" onClick={() => handleEditClick(product._id, product.pName, product.pPrice)}>Edit</Button>{' '}
+                                <Button variant="danger" onClick={() => handleDelete(product._id)}>Delete</Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+
+            <Button variant="success" onClick={() => setShowAddModal(true)}>Add Product</Button>
+
+            <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Product</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formProductName">
+                            <Form.Label>Product Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter product name" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group controlId="formProductPrice">
+                            <Form.Label>Product Price</Form.Label>
+                            <Form.Control type="text" placeholder="Enter product price" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowAddModal(false)}>Close</Button>
+                    <Button variant="primary" onClick={handleAdd}>Add</Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Product</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formProductName">
+                            <Form.Label>Product Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter product name" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group controlId="formProductPrice">
+                            <Form.Label>Product Price</Form.Label>
+                            <Form.Control type="text" placeholder="Enter product price" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowEditModal(false)}>Close</Button>
+                    <Button variant="primary" onClick={handleEdit}>Save Changes</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
-}
+};
 
-export default Todos;
+export default Appi;
