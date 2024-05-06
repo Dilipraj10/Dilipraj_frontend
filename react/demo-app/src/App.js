@@ -24,8 +24,8 @@ import BasicExample from './components/BasicExample';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import Todos from './components/Todos';
-// import Todo from './components/Todo';
-import Todos from './components/Todos';
+import Todo from './components/Todo';
+// import Todos from './components/Todos';
 function App() {
  
   return (
@@ -54,8 +54,9 @@ function App() {
           <ParentClass message={"hello"} name={"Dilip"}/>
           <ReducerComp/>
 
-          {/* <Todo/> */}
-          <Todos/>
+          
+          {/* <Todos/> */}
+          <Todo/>
 
         </div>
      
